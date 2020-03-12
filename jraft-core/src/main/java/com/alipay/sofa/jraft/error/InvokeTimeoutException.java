@@ -14,16 +14,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.alipay.sofa.jraft.rpc;
-
-import java.util.concurrent.Executor;
+package com.alipay.sofa.jraft.error;
 
 /**
  * @author jiachun.fjc
  */
-public interface InvokeCallback {
+public class InvokeTimeoutException extends RemotingException {
 
-    void complete(final Object result, final Throwable err);
+    private static final long serialVersionUID = -4710810309766380565L;
 
-    Executor executor();
+    public InvokeTimeoutException() {
+    }
+
+    public InvokeTimeoutException(String message) {
+        super(message);
+    }
+
+    public InvokeTimeoutException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public InvokeTimeoutException(Throwable cause) {
+        super(cause);
+    }
+
+    public InvokeTimeoutException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace);
+    }
 }

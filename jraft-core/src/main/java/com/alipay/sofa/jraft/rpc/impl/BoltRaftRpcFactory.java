@@ -16,16 +16,21 @@
  */
 package com.alipay.sofa.jraft.rpc.impl;
 
+import com.alipay.remoting.InvokeContext;
+import com.alipay.sofa.jraft.option.RpcOptions;
 import com.alipay.sofa.jraft.rpc.RaftRpcFactory;
 import com.alipay.sofa.jraft.rpc.RpcClient;
 import com.alipay.sofa.jraft.rpc.RpcServer;
+import com.alipay.sofa.jraft.rpc.impl.core.JRaftRpcAddressParser;
 import com.alipay.sofa.jraft.util.Endpoint;
 import com.alipay.sofa.jraft.util.Requires;
+import com.alipay.sofa.jraft.util.SPI;
 
 /**
  *
  * @author jiachun.fjc
  */
+@SPI
 public class BoltRaftRpcFactory implements RaftRpcFactory {
 
     @Override
@@ -50,5 +55,16 @@ public class BoltRaftRpcFactory implements RaftRpcFactory {
         }
         rpcServer.init(null);
         return rpcServer;
+    }
+
+    @Override
+    public ConfigHelper<RpcClient> defaultJRaftClientConfigHelper(final RpcOptions opts) {
+        return instance -> {
+            final BoltRpcClient client = (BoltRpcClient) instance;
+            final InvokeContext ctx = new InvokeContext();
+            ctx.put(InvokeContext.BOLT_CRC_SWITCH, opts.isEnableRpcChecksum());
+            client.setDefaultInvokeCtx(ctx);
+            client.setDefaultAddressParser(new JRaftRpcAddressParser());
+        };
     }
 }

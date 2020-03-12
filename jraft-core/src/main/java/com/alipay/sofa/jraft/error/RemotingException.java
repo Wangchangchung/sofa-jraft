@@ -14,16 +14,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.alipay.sofa.jraft.rpc;
-
-import java.util.concurrent.Executor;
+package com.alipay.sofa.jraft.error;
 
 /**
+ * Exception for default remoting problems.
+ *
  * @author jiachun.fjc
  */
-public interface InvokeCallback {
+public class RemotingException extends Exception {
 
-    void complete(final Object result, final Throwable err);
+    private static final long serialVersionUID = -6326244159775972292L;
 
-    Executor executor();
+    public RemotingException() {
+    }
+
+    public RemotingException(String message) {
+        super(message);
+    }
+
+    public RemotingException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public RemotingException(Throwable cause) {
+        super(cause);
+    }
+
+    public RemotingException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace);
+    }
 }

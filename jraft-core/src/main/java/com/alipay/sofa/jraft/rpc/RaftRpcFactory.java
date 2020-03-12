@@ -16,6 +16,7 @@
  */
 package com.alipay.sofa.jraft.rpc;
 
+import com.alipay.sofa.jraft.option.RpcOptions;
 import com.alipay.sofa.jraft.util.Endpoint;
 
 /**
@@ -60,6 +61,16 @@ public interface RaftRpcFactory {
      * @return a new rpc server instance
      */
     RpcServer newRpcServer(final Endpoint endpoint, final ConfigHelper<RpcServer> helper);
+
+    @SuppressWarnings("unused")
+    default ConfigHelper<RpcClient> defaultJRaftClientConfigHelper(final RpcOptions opts) {
+        return null;
+    }
+
+    @SuppressWarnings("unused")
+    default ConfigHelper<RpcServer> defaultJRaftServerConfigHelper(final RpcOptions opts) {
+        return null;
+    }
 
     interface ConfigHelper<T> {
 
